@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
 import json
 from .models import Record, Person
 from django.views.decorators.csrf import csrf_exempt
@@ -9,7 +8,20 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 def index(request):
-    return HttpResponse("Hello")
+    context = {}
+    all_person = Person.objects.all()
+    member_list = []
+    for person in all_person:
+        item = {
+            "id": person.id,
+            "name": person.name,
+            "expense": str(person.expense)
+        }
+        member_list.append(item)
+
+    context['member_list'] = member_list
+
+    return render(request, 'index.html', context)
 
 
 def get_records(request):
@@ -21,12 +33,13 @@ def get_records(request):
             "name": record.name,
             "members": str(record.all_members()),
             "cost": str(record.cost),
-            "average": str(record.average_cost())
+            # "average": str(record.average_cost())
         }
         items.append(item)
 
     return JsonResponse({
-        'success': 1,
+        'total': len(items),
+        'rows': items,
         'data': {
             "catalogues": {
                 "date": "日期",
