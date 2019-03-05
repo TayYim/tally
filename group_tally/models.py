@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 
@@ -6,7 +7,8 @@ from django.db import models
 class Record(models.Model):
     id = models.AutoField(u"ID", primary_key=True)
     name = models.CharField(u"名称", max_length=100)
-    date = models.DateField(u"日期", auto_now=False, auto_now_add=True)
+    date = models.DateField(u"日期", auto_now=False,
+                            auto_now_add=False, default=timezone.now())
     members = models.ManyToManyField("Person", verbose_name=u"参与人员")
     cost = models. DecimalField(
         u"金额", default=0, max_digits=8, decimal_places=2)
