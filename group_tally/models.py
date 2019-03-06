@@ -48,4 +48,4 @@ class Person(models.Model):
         for record in all_records:
             if self.name in record.all_members().split(','):
                 total = total + record.average_cost()
-        return total
+        return round(total, 2)
