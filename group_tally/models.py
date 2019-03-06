@@ -14,6 +14,9 @@ class Record(models.Model):
         u"金额", default=0, max_digits=8, decimal_places=2)
 
     def all_members(self):
+        """
+        返回参与成员列表的字符串形式
+        """
         member_list = []
         for member in self.members.values_list('name'):
             member_list.append(member[0])
@@ -32,8 +35,17 @@ class Record(models.Model):
 class Person(models.Model):
     id = models.AutoField(u"ID", primary_key=True)
     name = models.CharField(u"名字", max_length=100)
-    expense = models. DecimalField(
-        u"支出", default=0, max_digits=8, decimal_places=2)
 
     def __str__(self):
         return self.name
+
+    def expense(self):
+        """
+        个人总花费，根据record动态变化
+        """
+        total = 0.0
+        all_records = Record.objects.all()
+        for record in all_records:
+            if self.name in record.all_members().split(','):
+                total = total + record.average_cost()
+        return total

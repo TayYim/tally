@@ -15,7 +15,7 @@ def index(request):
         item = {
             "id": person.id,
             "name": person.name,
-            "expense": str(person.expense)
+            "expense": str(person.expense())
         }
         member_list.append(item)
 
@@ -60,19 +60,17 @@ def add_record(request):
         # getlist ref:https://blog.csdn.net/ndjk454164628/article/details/51757056
         members = request.POST.getlist('members[]')
         cost = request.POST['cost']
+        # date = request.POST['date']
 
         record = Record.objects.create(
             name=name,
-            cost=cost
+            cost=cost,
+            # date=date
         )
 
-        # update expense of each person
         for member_name in members:
             person = Person.objects.get(name=member_name)
             record.members.add(person)
-            person.expense = float(person.expense) + \
-                float(cost) / float(len(members))
-            person.save()
 
         record.save()
 
@@ -86,9 +84,9 @@ def add_record(request):
 
 def clear_records(request):
     Record.objects.all().delete()
-    for person in Person.objects.all():
-        person.expense = 0.0
-        person.save()
+    # for person in Person.objects.all():
+    #     person.expense = 0.0
+    #     person.save()
 
     return JsonResponse({
         "success": 1
@@ -102,7 +100,7 @@ def get_expense(request):
         item = {
             "id": person.id,
             "name": person.name,
-            "expense": str(person.expense)
+            "expense": str(person.expense())
         }
         items.append(item)
     return JsonResponse({
