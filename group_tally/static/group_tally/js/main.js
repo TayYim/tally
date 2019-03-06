@@ -1,4 +1,6 @@
 $(function() {
+  console.log("start");
+
   function loadTable() {
     $("#record_table").bootstrapTable("refresh", {
       silent: true
@@ -24,21 +26,31 @@ $(function() {
     var cost = $("#cost_input").val();
     var members = $("#members").val();
 
-    var param = {
-      name: name,
-      cost: cost,
-      members: members
-    };
+    console.log("in");
 
-    console.log(param);
+    if (members == null) {
+      alert("请选择参与人员");
+    } else {
+      var param = {
+        name: name,
+        cost: cost,
+        members: members
+      };
 
-    $.post(url, param, function(res) {
-      if (res.success) {
-        $("#name_input").val("");
-        $("#cost_input").val("");
-        syncExpense();
-        loadTable();
-      }
-    });
+      console.log(param);
+
+      $.post(url, param, function(res) {
+        if (res.success) {
+          $("#name_input").val("");
+          $("#cost_input").val("");
+          syncExpense();
+          loadTable();
+        }
+      });
+    }
+  });
+
+  $("#datetimepicker1").datetimepicker({
+    format: "YYYY-MM-DD"
   });
 });

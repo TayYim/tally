@@ -62,6 +62,12 @@ def add_record(request):
         cost = request.POST['cost']
         # date = request.POST['date']
 
+        # validate members
+        if len(members) < 1:
+            return JsonResponse({
+                "success": 0
+            })
+
         record = Record.objects.create(
             name=name,
             cost=cost,
