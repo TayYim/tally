@@ -60,7 +60,7 @@ def add_record(request):
         # getlist ref:https://blog.csdn.net/ndjk454164628/article/details/51757056
         members = request.POST.getlist('members[]')
         cost = request.POST['cost']
-        # date = request.POST['date']
+        date = request.POST['date']
 
         # validate members
         if len(members) < 1:
@@ -71,7 +71,7 @@ def add_record(request):
         record = Record.objects.create(
             name=name,
             cost=cost,
-            # date=date
+            date=date
         )
 
         for member_name in members:
@@ -84,7 +84,8 @@ def add_record(request):
             "success": 1,
             "name": name,
             "members": members,
-            "cost": cost
+            "cost": cost,
+            "date": date
         })
 
 

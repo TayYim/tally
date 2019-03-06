@@ -1,6 +1,8 @@
 $(function() {
   console.log("start");
 
+  $("#record_table").bootstrapTable({ search: true });
+
   function loadTable() {
     $("#record_table").bootstrapTable("refresh", {
       silent: true
@@ -24,6 +26,7 @@ $(function() {
     var url = "/add_record";
     var name = $("#name_input").val();
     var cost = $("#cost_input").val();
+    var date = $("#date_input").val();
     var members = $("#members").val();
 
     console.log("in");
@@ -34,7 +37,8 @@ $(function() {
       var param = {
         name: name,
         cost: cost,
-        members: members
+        members: members,
+        date: date
       };
 
       console.log(param);
