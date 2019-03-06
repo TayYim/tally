@@ -25,7 +25,7 @@ def index(request):
 
 
 def get_records(request):
-    all_records = Record.objects.all().order_by('-id')
+    all_records = Record.objects.all().order_by('-date')
     items = []
     for record in all_records:
         item = {
