@@ -25,7 +25,7 @@ SECRET_KEY = 'eruz5%_)a3k6(#(w@y6(tbk6)1m6&c-ds)4d%&5!$6e%!6^gm2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '120.79.39.211']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '120.79.39.211', 'jms.echotay.com']
 
 
 # Application definition
